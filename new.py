@@ -1,5 +1,6 @@
-x = (8, 9)
-z, y = x
-print(z, y, x)
-print(type(x))
-print(isinstance(x, tuple))
+n = '7/4'
+x, y = n.split('/')
+x = int(x)
+y = int(y)
+print(x, y)
+print(type(x), type(y))

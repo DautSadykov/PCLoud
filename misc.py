@@ -548,50 +548,77 @@
 # while not stack.is_empty():
 #     print(stack.pop())
 
-class Point():
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+# class Point():
+#     def __init__(self, x, y):
+#         self.x = x
+#         self.y = y
+#
+#     def move(self, a, b):
+#         self.x += a
+#         self.y += b
+#
+#     def length(self, other):
+#         z = ((self.x - other.x) ** 2 + (self.y - other.y) ** 2) ** 0.5
+#         z = round(z, 2)
+#         return z
+#
+#
+# class PatchedPoint(Point):
+#     def __init__(self, x=0, y=0):
+#         super().__init__(x=x, y=y)
+#         if isinstance(x, tuple):
+#             self.x, self.y = x
+#         else:
+#             self.x = x
+#             self.y = y
+#
+#     def __str__(self):
+#         return f'({self.x}, {self.y})'
+#
+#     def __repr__(self):
+#         return f'PatchedPoint({self.x}, {self.y})'
+#
+#     def __add__(self, other):
+#         x, y = other
+#         x = self.x + x
+#         y = self.y + y
+#         return PatchedPoint(x, y)
+#
+#     def __iadd__(self, other):
+#         a, b = other
+#         self.x = self.x + a
+#         self.y = self.y + b
+#         return self
+#
+# first_point = second_point = PatchedPoint((2, -7))
+# first_point += (7, 3)
+# print(first_point, second_point, first_point is second_point)
 
-    def move(self, a, b):
-        self.x += a
-        self.y += b
-
-    def length(self, other):
-        z = ((self.x - other.x) ** 2 + (self.y - other.y) ** 2) ** 0.5
-        z = round(z, 2)
-        return z
-
-
-class PatchedPoint(Point):
-    def __init__(self, x=0, y=0):
-        super().__init__(x=x, y=y)
-        if isinstance(x, tuple):
-            self.x, self.y = x
-        else:
-            self.x = x
-            self.y = y
-
-    def __str__(self):
-        return f'({self.x}, {self.y})'
+class Fraction:
+    def __init__(self, n, d = None):
+        if isinstance(n, str):
+            n, d = n.split('/')
+            n = int(n)
+            d = int(d)
+        for i in range(1, max(n, d) + 1):
+            if n % i == 0 and d % i == 0:
+                n /= i
+                d /= i
+        self.num = int(n)
+        self.denom = int(d)
 
     def __repr__(self):
-        return f'PatchedPoint({self.x}, {self.y})'
+        return f'Fraction({self.num}, {self.denom})'
 
-    def __add__(self, other):
-        x, y = other
-        x = self.x + x
-        y = self.y + y
-        return PatchedPoint(x, y)
+    def __str__(self):
+        return f'{self.num}/{self.denom}'
 
-    def __iadd__(self, other):
-        a, b = other
-        self.x += a
-        self.y += b
+fraction = Fraction(3, 9)
+print(fraction, repr(fraction))
+fraction = Fraction('7/14')
+print(fraction, repr(fraction))
 
-first_point = second_point = PatchedPoint((2, -7))
-first_point += (7, 3)
-print(first_point, second_point, first_point is second_point)
+
 
 
 
