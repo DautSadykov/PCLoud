@@ -589,9 +589,11 @@ class PatchedPoint(Point):
         self.x += a
         self.y += b
 
-first_point = PatchedPoint((2, -7))
+first_point = second_point = PatchedPoint((2, -7))
 first_point += (7, 3)
-print(first_point.x, first_point.y)
+print(first_point, second_point, first_point is second_point)
+
+
 
 
 
