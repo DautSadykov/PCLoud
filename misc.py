@@ -595,28 +595,77 @@
 # print(first_point, second_point, first_point is second_point)
 
 class Fraction:
-    def __init__(self, n, d = None):
-        if isinstance(n, str):
+    def __init__(self, n, d=None):
+        if d is None:
             n, d = n.split('/')
-            n = int(n)
-            d = int(d)
-        for i in range(1, max(n, d) + 1):
-            if n % i == 0 and d % i == 0:
-                n /= i
-                d /= i
-        self.num = int(n)
-        self.denom = int(d)
+        n, d = int(n), int(d)
+        gcd = self._gcd(n, d)
+        self.num = n // gcd
+        self.denom = d // gcd
+
+    def _gcd(self, a, b):
+        while b:
+            a, b = b, a % b
+        return a
 
     def __repr__(self):
-        return f'Fraction({self.num}, {self.denom})'
+        return f'Fraction(\'{self.__str__()}\')'
 
     def __str__(self):
+        if self.num == 0:
+            return '0'
+        elif self.denom == self.num:
+            return '1'
         return f'{self.num}/{self.denom}'
 
-fraction = Fraction(3, 9)
-print(fraction, repr(fraction))
-fraction = Fraction('7/14')
-print(fraction, repr(fraction))
+    def numerator(self, new_num=None):
+        if new_num is not None:
+            gcd = self._gcd(new_num, self.denom)
+            self.num = new_num // gcd
+            self.denom = self.denom // gcd
+        else:
+            return self.num
+
+    def denominator(self, new_denom=None):
+        if new_denom is not None:
+            gcd = self._gcd(self.num, new_denom)
+            self.num = self.num // gcd
+            self.denom = new_denom // gcd
+        else:
+            return self.denom
+
+    def __neg__(self):
+        return Fraction(-self.num, self.denom)
+
+    def __add__(self, other):
+        num = self.num * other.denom + other.num * self.denom
+        denom = self.denom * other.denom
+        return Fraction(num, denom)
+
+    def __iadd__(self, other):
+        self.num = self.num * other.denom + other.num * self.denom
+        self.denom = self.denom * other.denom
+        return self
+
+    def __sub__(self, other):
+        num = self.num * other.denom - other.num * self.denom
+        denom = self.denom * other.denom
+        return Fraction(num, denom)
+
+    def __isub__(self, other):
+        self.num = self.num * other.denom - other.num * self.denom
+        self.denom = self.denom * other.denom
+        return self
+
+
+a = Fraction(2, 9)
+b = Fraction(1, 9)
+b.denominator(-9)
+c = a + b
+print(c)
+
+
+
 
 
 
