@@ -658,11 +658,11 @@ class Fraction:
         return self
 
 
-a = Fraction(2, 9)
-b = Fraction(1, 9)
-b.denominator(-9)
-c = a + b
-print(c)
+a = Fraction(1, 3)
+c = b = Fraction(1, 2)
+b -= a
+print(a, b, c, b is c)
+
 
 
 
